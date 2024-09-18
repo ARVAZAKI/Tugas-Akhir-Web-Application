@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
+Route::view('/test', 'layouts.dashboard-layout');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -15,4 +16,4 @@ Route::view('profile', 'profile')
 Route::view('/coba', 'tes')
     ->name('tes');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
