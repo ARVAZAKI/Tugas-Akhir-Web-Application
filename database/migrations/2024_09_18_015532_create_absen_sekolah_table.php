@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('deksripsi')->nullable();
             $table->string('surat_izin')->nullable();
+            $table->string('lokasi');
             $table->timestamps();
         });
     }

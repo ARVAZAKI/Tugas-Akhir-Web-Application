@@ -34,7 +34,9 @@
                         
                         <a href="" class="w-full bg-[#0B235E] text-white py-4 px-6 rounded-lg flex justify-between items-center hover:bg-blue-800 transition-colors no-underline">
                             <div>
-                                <div class="text-xl font-bold">Tamu</div>
+                                <div class="text-xl font-bold">Visitor
+                                </div>
+                                <div class="text-sm">Exclusive to visitor only.</div>
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
