@@ -1,7 +1,5 @@
 # Absensi Mata Pelajaran Berbasis Lokasi dan Pelaporan Kegiatan/Kejadian di sekolah
 ## Deskripsi Proyek
-judul : **Aplikasi Berbasis Web untuk Pengelolaan Keamanan Sekolah dan Pemantauan Aktivitas Siswa** 
-<br>
 adalah sebuah sistem absensi digital dan pelaporan kegiatan yang dirancang untuk digunakan oleh sekolah. Aplikasi ini memungkinkan siswa untuk melakukan absensi berdasarkan lokasi fisik mereka dan melaporkan kejadian/kegiatan secara efisien. Dengan memanfaatkan teknologi geolokasi, aplikasi ini memastikan bahwa siswa hanya dapat melakukan absensi ketika mereka berada di lokasi yang valid (seperti di dalam kelas atau di area sekolah yang ditentukan).
 
 ## Fitur Utama
