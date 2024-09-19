@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('role');
-            $table->string('class_id')->nullable();
+            $table->string('role')->default('student');
+            $table->string('kode_kelas')->nullable();
+            $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas')->onDelete('cascade')->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
