@@ -1,4 +1,4 @@
-# Absensi Mata Pelajaran Berbasis Lokasi
+# Absensi Mata Pelajaran Berbasis Lokasi dan Pelaporan Kegiatan/Kejadian di sekolah
 ## Deskripsi Proyek
 judul : **Aplikasi Berbasis Web untuk Pengelolaan Keamanan Sekolah dan Pemantauan Aktivitas Siswa** 
 <br>
