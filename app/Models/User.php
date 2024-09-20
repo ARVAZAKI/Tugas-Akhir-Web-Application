@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'kode_kelas'
     ];
 
     /**
@@ -43,5 +45,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kode_kelas', 'kode_kelas');
+    }
+
+    public function biodata()
+    {
+        return $this->hasOne(User::class, 'user_id', 'id');
+    }
+
+    public function laporan()
+    {
+        return $this->hasMany(Laporan::class, 'user_id', 'id');
     }
 }

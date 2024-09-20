@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class AbsenMapel extends Model
 {
     use HasFactory;
+    protected $table = 'absen_mapel';
 }
