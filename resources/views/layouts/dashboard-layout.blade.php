@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,42 +8,81 @@
     <title>EduSecure | @yield('title')</title>
     @vite('resources/css/app.css')
 </head>
+@livewireStyles
 
-<body>
+<body class="bg-gray-100">
     <div class="flex">
-        <!-- Sidebar - hidden on small screens, visible on md and larger -->
-        <div id="sidebar" class="hidden md:block w-56 min-h-screen space-y-8 bg-[#f2f4fa]">
-            <div class="flex items-center justify-center py-3 text-2xl">
-                <div>Logo</div>
+        <!-- Sidebar -->
+        <div id="sidebar" class="hidden md:flex md:flex-col w-56 min-h-screen space-y-8 bg-[#f2f4fa] shadow-lg transition-transform duration-300 ease-in-out">
+            <div class="flex items-center justify-center py-6 text-3xl font-bold text-blue-600">
+                <div>EduSecure</div>
             </div>
             <div class="px-4 space-y-3">
-                <div class="flex items-center space-x-3">
-                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Vector" class="w-4 h-4"></div>
-                    <div>Dashboard</div>
-                </div>
-                <div class="flex items-center space-x-2">
+                @if (Auth::user()->role == 'admin')
+                <a href="{{route('dashboard.admin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Buat Akun" class="w-4 h-4"></div>
+                    <div>Laporan</div>
+                </a>
+                <a href="{{route('dashboard.admin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Buat Akun" class="w-4 h-4"></div>
+                    <div>Buat Akun</div>
+                </a>
+                <a href="{{route('dashboard.admin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
+                    <div>Izin</div>
+                </a>
+                <a href="{{route('profile')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/mdi_account-circle-outline.svg')}}" alt="Profile" class="w-5 h-5"></div>
                     <div>Profile</div>
-                </div>
+                </a>
+                <hr>
+                @livewire('button-logout')
+
+                @endif
+
+                @if (Auth::user()->role == 'student')
+                <a href="{{route('dashboard.student')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
+                    <div>Dashboard</div>
+                </a>
+                <a href="{{route('profile')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/mdi_account-circle-outline.svg')}}" alt="Profile" class="w-5 h-5"></div>
+                    <div>Profile</div>
+                </a>
+                <hr>
+                @livewire('logout-component')
+
+                @endif
             </div>
         </div>
 
+        <!-- Main Content -->
         <div class="flex-1">
-            <div class="flex items-center justify-between p-5 border-b-2 md:justify-end">
-                <!-- Menu icon - visible only on small screens -->
-                <div id="menu-icon" class="block md:hidden"><img src="{{asset('assets/menu.svg')}}" alt="Vector" class="w-4 h-4"></div>
-
-                <!-- Profile section - hidden on small screens -->
-                <div class="items-center hidden gap-3 md:flex">
-                    <div class="rounded-full size-10 bg-slate-500"></div>
+            <div class="flex items-center justify-between p-5 border-b-2 bg-white shadow-md">
+                <!-- Menu icon for small screens -->
+                <div id="menu-icon" class="block md:hidden">
+                    <img src="{{asset('assets/menu.svg')}}" alt="Menu" class="w-6 h-6 cursor-pointer">
+                </div>
+        
+                <!-- Empty div to keep space between menu-icon and profile section -->
+                <div class="flex-1"></div>
+        
+                <!-- Profile section -->
+                <div class="hidden md:flex items-center gap-3">
+                    <img src="{{asset('assets/profile.png')}}" class="rounded-full w-10 h-10 shadow-md" alt="profile photo">
                     <div class="text-right">
-                        <div class="text-lg">Nama</div>
-                        <div class="text-xs">Student</div>
+                        <div class="text-lg font-semibold">{{ Auth::user()->name }}</div>
+                        <div class="text-xs text-gray-500">{{ Auth::user()->role }}</div>
                     </div>
                 </div>
             </div>
-            <div>@yield('content')</div>
+        
+            <!-- Content Section -->
+            <div class="p-5">
+                @yield('content')
+            </div>
         </div>
+        
     </div>
 
     <script>
@@ -50,23 +90,20 @@
         const sidebar = document.getElementById('sidebar');
         let sidebarVisible = false;
 
-        // Toggle sidebar visibility
         menuIcon.addEventListener('click', (event) => {
             sidebar.classList.toggle('hidden');
             sidebarVisible = !sidebarVisible;
-            menuIcon.classList.toggle('hidden', sidebarVisible); // Hide menu icon when sidebar is visible
-            event.stopPropagation(); // Prevent the click event from propagating to document
+            event.stopPropagation();
         });
 
-        // Close sidebar when clicking outside of it
         document.addEventListener('click', (event) => {
             if (sidebarVisible && !sidebar.contains(event.target) && !menuIcon.contains(event.target)) {
                 sidebar.classList.add('hidden');
                 sidebarVisible = false;
-                menuIcon.classList.remove('hidden'); // Show menu icon when sidebar is hidden
             }
         });
     </script>
+    @livewireScripts
 </body>
 
 </html>

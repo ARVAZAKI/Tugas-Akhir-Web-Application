@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome');
 Route::view('/test', 'layouts.dashboard-layout');
 
-Route::view('dashboard', 'dashboard')
+Route::view('dashboard-admin', 'livewire.admin.dashboard')
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->name('dashboard.admin');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

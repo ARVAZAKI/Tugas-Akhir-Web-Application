@@ -47,11 +47,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function kelas()
-    {
-        return $this->belongsTo(Kelas::class, 'kode_kelas', 'kode_kelas');
-    }
-
     public function biodata()
     {
         return $this->hasOne(User::class, 'user_id', 'id');
