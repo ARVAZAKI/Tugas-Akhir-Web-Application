@@ -8,6 +8,7 @@
         <div class="flex items-center">
             <span class="mr-2">Show</span>
             <select wire:model="perPage" class="border rounded px-2 py-1">
+                <option></option>
                 <option>3</option>
                 <option>5</option>
                 <option>10</option>

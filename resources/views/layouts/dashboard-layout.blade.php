@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,14 +19,34 @@
             <div class="px-4 space-y-3">
                 @if (Auth::user()->role == 'admin')
                 <a href="{{route('dashboard.admin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
-                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Buat Akun" class="w-4 h-4"></div>
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Laporan" class="w-4 h-4"></div>
                     <div>Laporan</div>
                 </a>
-                <a href="{{route('dashboard.admin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
-                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Buat Akun" class="w-4 h-4"></div>
-                    <div>Buat Akun</div>
-                </a>
-                <a href="{{route('dashboard.admin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+
+                <!-- Dropdown for Buat -->
+                <div x-data="{ open: false }">
+                    <button @click="open = !open" class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors w-full">
+                        <div><img src="{{asset('assets/Vector.svg')}}" alt="Buat" class="w-4 h-4"></div>
+                        <div>Buat</div>
+                        <svg :class="{'rotate-180': open}" class="w-4 h-4 ml-auto transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <div x-show="open" class="pl-6 space-y-2">
+                        <a href="{{ route('create-account') }}" wire:navigate class="block p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                            Akun Staf/Guru
+                        </a>
+                        <a href="{{ route('create-kelas') }}" wire:navigate class="block p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                            Kelas
+                        </a>
+                        <a href="{{ route('create-mapel') }}" wire:navigate class="block p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                            Mapel
+                        </a>
+                    </div>
+                </div>
+
+                <a href="{{route('izin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
                     <div>Izin</div>
                 </a>
