@@ -21,7 +21,18 @@ class AccountController extends Controller
             'password' => 'required|min:8',
             'role' => 'required',
             'confirm_password' => 'required|same:password'
-        ]);
+        ],
+    [
+        'nama.required' => 'nama harus diisi',
+        'email.required' => 'email harus diisi',
+        'email.unique' => 'email sudah ada, silahkan pilih email yang lain',
+        'email.email' => 'email harus memiliki format email',
+        'role.required' => 'role harus diisi',
+        'password.required' => 'password harus diisi',
+        'password.min' => 'password harus memiliki minimal 8 karakter',
+        'confirm_password.required' => 'konfirmasi password harus diisi',
+        'confirm_password.same' => 'konfirmasi password tidak sama dengan password'
+    ]);
 
         User::create([
             'name' => $request->nama,

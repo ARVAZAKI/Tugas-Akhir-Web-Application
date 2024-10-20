@@ -7,7 +7,6 @@
     <title>EduSecure | @yield('title')</title>
     @vite('resources/css/app.css')
 </head>
-@livewireStyles
 
 <body class="bg-gray-100">
     <div class="flex">
@@ -41,12 +40,12 @@
                             Kelas
                         </a>
                         <a href="{{ route('create-mapel') }}" wire:navigate class="block p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
-                            Mapel
+                            Mata Pelajaran
                         </a>
                     </div>
                 </div>
 
-                <a href="{{route('izin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
                     <div>Izin</div>
                 </a>
@@ -69,7 +68,28 @@
                     <div>Profile</div>
                 </a>
                 <hr>
-                @livewire('logout-component')
+                @livewire('button-logout')
+
+                @endif
+                @if (Auth::user()->role == 'teacher')
+                <a href="/guru" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
+                    <div>Dashboard</div>
+                </a>
+                <a href="/absen-guru" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
+                    <div>Absen</div>
+                </a>
+                <a href="/izin-guru" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
+                    <div>Izin</div>
+                </a>
+                <a href="{{route('profile')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/mdi_account-circle-outline.svg')}}" alt="Profile" class="w-5 h-5"></div>
+                    <div>Profile</div>
+                </a>
+                <hr>
+                @livewire('button-logout')
 
                 @endif
             </div>
@@ -122,7 +142,6 @@
             }
         });
     </script>
-    @livewireScripts
 </body>
 
 </html>

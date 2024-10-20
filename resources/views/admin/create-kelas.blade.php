@@ -2,8 +2,8 @@
 @section('title','Buat Kelas')
 @section('content')
 
-<div class="mx-5">
-      @if (session()->has('message'))
+<div class="mx-5" x-data="{ modelKelas: false }">
+    @if (session()->has('message'))
       <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded-md shadow-md transition-all duration-500 ease-in-out transform hover:scale-105">
           <div class="flex items-center">
               <div class="flex-shrink-0">
@@ -52,11 +52,10 @@
         </div>
 
         <div class="flex items-center space-x-2">
-            <button class="py-2 px-6 rounded-lg bg-blue-500 text-white hover:bg-blue-700 transition-colors whitespace-nowrap w-auto">
+            <button @click="modelKelas = true" class="py-2 px-6 rounded-lg bg-blue-500 text-white hover:bg-blue-700 transition-colors whitespace-nowrap w-auto">
                 Buat Kelas
             </button>
             
-            <input type="text" placeholder="Search..." class="border rounded px-3 py-1 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
     </div>
 
@@ -99,6 +98,27 @@
             </tbody>
         </table>
     </div>
+    <div x-show="modelKelas" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75" x-cloak>
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+            <h2 class="text-2xl font-bold mb-4">Buat Kelas Baru</h2>
+            <form action="{{route('create-kelas')}}" method="POST">
+                  @csrf
+                  <div class="mb-4">
+                    <label for="nama_kelas" class="block text-gray-700">Nama kelas</label>
+                    <input name="nama_kelas" type="text" id="nama_kelas" class="border rounded w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required/>
+                    @error('nama_kelas') <p class="text-red-500 mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button @click="modelKelas = false" type="button" class="py-2 px-6 rounded-lg bg-red-500 text-white hover:bg-red-700 transition-colors">Batal</button>
+                    <button type="submit" class="py-2 px-6 rounded-lg bg-green-500 text-white hover:bg-green-700 transition-colors">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-
+<script>
+    window.addEventListener('close-modal', event => {
+        Alpine.store('modelKelas', false);
+    })
+</script>
 @endsection

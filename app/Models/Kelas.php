@@ -15,8 +15,14 @@ class Kelas extends Model
     ];
 
   
-    public function users()
+    // public function users()
+    // {
+    //     return $this->hasMany(User::class, 'kode_kelas', 'kode_kelas');
+    // }
+    
+    public function mapel()
     {
-        return $this->hasMany(User::class, 'kode_kelas', 'kode_kelas');
+        return $this->belongsToMany(Kelas::class, 'kelas_mapel', 'kelas_id', 'mapel_id');
     }
+
 }

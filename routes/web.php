@@ -2,39 +2,42 @@
 
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\admin\MapelController;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
 Route::view('/', 'welcome')->middleware('guest');
 Route::view('/test', 'layouts.dashboard-layout');
 
-Volt::route('guru', 'pages.guru.dashboard-guru')->name('guru');
-Volt::route('guru/absen', 'pages.guru.absen-guru')->name('guru.absen');
-Volt::route('guru/izin', 'pages.guru.izin-guru')->name('guru.izin');
+Route::get('/guru', function(){
+ return view('guru.dashboard-guru');
+})->name('guru');
+Route::get('/absen-guru', function(){
+ return view('guru.absen-guru');
+})->name('absen-guru');
+Route::get('/izin-guru', function(){
+ return view('guru.izin-guru');
+})->name('izin-guru');
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-
-    Route::view('dashboard-admin', 'livewire.admin.dashboard')
-        ->middleware(['auth', 'verified'])
-        ->name('dashboard.admin');
-
-    Route::view('create-mapel', 'livewire.admin.create-mapel')
-        ->middleware(['auth', 'verified'])
-        ->name('create-mapel');
-
-    Route::view('izin', 'livewire.admin.izin')
-        ->middleware(['auth', 'verified'])
-        ->name('izin');
-
-});
 
 Route::prefix('admin')->middleware(['auth'])->group(function(){
+    Route::view('dashboard-admin', 'livewire.admin.dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard.admin');
+
     Route::get('/create-account', [AccountController::class, "index"])->name('create-account');
     Route::post('/create-account', [AccountController::class, "store"])->name('store-account');
-    Route::delete('/delete/{id}', [AccountController::class, "delete"])->name('delete-account');
+    Route::delete('/delete-account/{id}', [AccountController::class, "delete"])->name('delete-account');
+
     Route::get('/create-kelas', [ClassController::class, "index"])->name('create-kelas');
     Route::post('/create-kelas', [ClassController::class, "store"])->name('store-kelas');
-    Route::delete('/delete/{id}', [ClassController::class, "delete"])->name('delete-kelas');
+    Route::delete('/delete-kelas/{id}', [ClassController::class, "delete"])->name('delete-kelas');
+
+    Route::get('/create-mapel', [MapelController::class, "index"])->name('create-mapel');
+    Route::post('/create-mapel', [MapelController::class, "store"])->name('store-mapel');
+    Route::delete('/delete-mapel/{id}', [MapelController::class, "delete"])->name('delete-mapel');
+    Route::delete('/delete-mapel-kelas/{id}', [MapelController::class, "deleteKelas"])->name('delete-mapel-kelas');
+
+    Route::post('/create-mapel-kelas', [MapelController::class, "createKM"])->name('create-KM');
 });
 
 

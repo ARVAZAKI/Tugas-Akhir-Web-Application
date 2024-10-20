@@ -9,4 +9,11 @@ class GuruMapel extends Model
 {
     use HasFactory;
     protected $table = 'guru_mapel';
+    protected $fillable = [
+        'mapel_id',
+        'user_id'
+    ];
+    public $timestamps = false;
+
+  
 }

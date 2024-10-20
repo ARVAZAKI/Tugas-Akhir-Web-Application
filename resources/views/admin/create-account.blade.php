@@ -152,35 +152,6 @@
         Alpine.store('showModal', false);
     })
 </script>
-<script>
-    const table = document.getElementById('table-akun');
-    const search = document.getElementById('search');
-
-    search.addEventListener('input', () => {
-        const filter = search.value.toLowerCase();
-        const rows = table.getElementsByTagName('tr');
-
-        for (let i = 0; i < rows.length; i++) {
-            const row = rows[i];
-            const columns = row.getElementsByTagName('td');
-
-            let match = false;
-            for (let j = 0; j < columns.length; j++) {
-                const column = columns[j];
-                if (column.textContent.toLowerCase().includes(filter)) {
-                    match = true;
-                    break;
-                }
-            }
-
-            if (match) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        }
-    });
-</script>
 @endpush
 
 @endsection

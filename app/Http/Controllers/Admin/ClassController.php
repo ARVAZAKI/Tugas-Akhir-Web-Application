@@ -16,7 +16,11 @@ class ClassController extends Controller
     
     public function store(Request $request){
         $request->validate([
-            'nama_kelas' => 'required'
+            'nama_kelas' => 'required|unique:kelas,nama_kelas'
+        ],
+        [
+            'nama_kelas.required' => 'Nama kelas wajib diisi.',
+            'nama_kelas.unique' => 'Nama kelas sudah ada, silakan pilih nama lain.',
         ]);
 
         Kelas::create([

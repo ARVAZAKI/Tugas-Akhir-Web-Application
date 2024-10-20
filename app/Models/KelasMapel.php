@@ -9,4 +9,10 @@ class KelasMapel extends Model
 {
     use HasFactory;
     protected $table = 'kelas_mapel';
+    protected $fillable = [
+        'kelas_id',
+        'mapel_id',
+        'status_absen',
+    ];
+    
 }
