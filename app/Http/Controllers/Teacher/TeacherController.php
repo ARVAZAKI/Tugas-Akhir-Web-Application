@@ -12,7 +12,4 @@ class TeacherController extends Controller
     public function index(){
         return view('guru.dashboard-guru');
     }
-    public function izin(){
-        return view('guru.izin-guru');
-    }
 }

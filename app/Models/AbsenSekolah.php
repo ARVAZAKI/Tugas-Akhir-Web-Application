@@ -12,8 +12,10 @@ class AbsenSekolah extends Model
     protected $fillable = [
         'user_id',
         'status',
-        'deskripsi',
+        'keterangan',
         'surat_izin',
-        'lokasi'
+        'lokasi',
+        'tanggal-izin',
+        'tanggal-absen',
     ];
 }

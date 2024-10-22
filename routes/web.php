@@ -4,6 +4,7 @@ use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\admin\MapelController;
+use App\Http\Controllers\IzinController;
 use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +21,13 @@ Route::get('/izin-guru', function(){
  return view('guru.izin-guru');
 })->name('izin-guru');
 
-Route::post('/handle-absen-sekolah', [AbsenController::class, "handleAbsenSekolah"])->name('handle-absen-sekolah');
-Route::get('/absen-sekolah', [AbsenController::class, "absen"])->name('absen-sekolah');
+Route::post('/handle-absen-sekolah', [AbsenController::class, "handleAbsenSekolah"])->name('handle-absen-sekolah')->middleware('auth');;
+Route::get('/absen-sekolah', [AbsenController::class, "absen"])->name('absen-sekolah')->middleware('auth');
+Route::get('/izin', [IzinController::class, "izin"])->name('izin')->middleware('auth');
+Route::post('/izin', [IzinController::class, "postIzin"])->name('izinPost');
 
-Route::prefix('guru')->group(function(){
+Route::prefix('guru')->middleware('auth')->group(function(){
     Route::get('/', [TeacherController::class, "index"])->name('dashboard.guru');
-    Route::get('/izin', [TeacherController::class, "izin"])->name('izin.guru');
 });
 Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::view('dashboard-admin', 'livewire.admin.dashboard')

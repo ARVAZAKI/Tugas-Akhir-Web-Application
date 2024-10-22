@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('status');
-            $table->string('deksripsi')->nullable();
+            $table->string('keterangan')->nullable();
             $table->string('surat_izin')->nullable();
-            $table->string('lokasi');
+            $table->date('tanggal_izin')->nullable();
+            $table->date('tanggal_absen')->nullable();
+            $table->string('lokasi')->nullable();;
             $table->timestamps();
         });
     }
