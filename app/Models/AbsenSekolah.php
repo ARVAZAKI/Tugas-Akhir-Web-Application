@@ -9,4 +9,11 @@ class AbsenSekolah extends Model
 {
     use HasFactory;
     protected $table = 'absen_sekolah';
+    protected $fillable = [
+        'user_id',
+        'status',
+        'deskripsi',
+        'surat_izin',
+        'lokasi'
+    ];
 }

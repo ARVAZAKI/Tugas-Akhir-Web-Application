@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\admin\MapelController;
+use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->middleware('guest');
@@ -18,7 +20,13 @@ Route::get('/izin-guru', function(){
  return view('guru.izin-guru');
 })->name('izin-guru');
 
+Route::post('/handle-absen-sekolah', [AbsenController::class, "handleAbsenSekolah"])->name('handle-absen-sekolah');
+Route::get('/absen-sekolah', [AbsenController::class, "absen"])->name('absen-sekolah');
 
+Route::prefix('guru')->group(function(){
+    Route::get('/', [TeacherController::class, "index"])->name('dashboard.guru');
+    Route::get('/izin', [TeacherController::class, "izin"])->name('izin.guru');
+});
 Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::view('dashboard-admin', 'livewire.admin.dashboard')
     ->middleware(['auth', 'verified'])

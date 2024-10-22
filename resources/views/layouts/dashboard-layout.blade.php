@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduSecure | @yield('title')</title>
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -72,15 +74,15 @@
 
                 @endif
                 @if (Auth::user()->role == 'teacher')
-                <a href="/guru" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="{{route('dashboard.guru')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
                     <div>Dashboard</div>
                 </a>
-                <a href="/absen-guru" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="{{route('absen-sekolah')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
-                    <div>Absen</div>
+                    <div>Absen Sekolah</div>
                 </a>
-                <a href="/izin-guru" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="{{route('izin.guru')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
                     <div>Izin</div>
                 </a>

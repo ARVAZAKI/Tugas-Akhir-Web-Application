@@ -27,7 +27,7 @@ new #[Layout('layouts.guest')] class extends Component
         $this->redirectIntended(default: route('dashboard.admin', absolute: false), navigate: true);
         }
         if(Auth::user()->role == 'teacher'){
-        $this->redirectIntended(default: route('guru', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('dashboard.guru', absolute: false), navigate: true);
         }
     }
 }; ?>
