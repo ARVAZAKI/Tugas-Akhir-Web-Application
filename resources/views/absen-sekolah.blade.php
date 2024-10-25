@@ -1,34 +1,53 @@
 @extends('layouts.dashboard-layout')
-@section('title','dashboard')
+
+@section('title', 'Dashboard')
+
 @section('content')
-<div>
-    <div class="container">
-        <div class="p-4 my-3 border-2 rounded-md md:flex md:justify-center">
-            <div class="space-y-2 border-b-2 md:w-3/4 md:space-y-8 md:border-b-0 md:border-r-2">
-                <div id="map" style="height: 400px; width: 100%;"></div>
-            </div>
-            <div class="my-1 space-y-4 lg:maxw md:mx-5">
-                <div class="space-y-2">
-                    <form id="lokasiForm" method="POST" action="{{ route('handle-absen-sekolah') }}">
-                        @csrf
-                        <input type="hidden" name="lokasi" id="lokasi">
-                        <button type="submit" 
-                            @if($statusAbsen) 
-                                disabled 
-                                class="h-full w-full rounded-xl bg-gray-300 py-2 text-center font-semibold cursor-not-allowed lg:w-64"
-                            @else
-                                class="h-full w-full rounded-xl bg-[#d6fc92] py-2 text-center font-semibold transition-all hover:bg-[#c0f090] active:bg-green-100 lg:w-64"
-                            @endif
-                        >
-                            @if($statusAbsen)
-                                Sudah Presensi Hari Ini
-                            @else
-                                Presensi
-                            @endif
-                        </button>
-                    </form>
+<div class="container mx-auto my-4 p-4">
+    <div class="flex flex-col md:flex-row bg-white p-6 rounded-lg shadow-md space-y-4 md:space-y-0 md:space-x-4">
+        
+        {{-- Map Section --}}
+        <div class="md:w-2/3">
+            <div id="map" style="height: 400px; width: 100%;" class="rounded-lg border"></div>
+        </div>
+
+        {{-- Presensi Form Section --}}
+        <div class="md:w-1/3 flex flex-col justify-center space-y-6">
+            {{-- Alert untuk pesan error atau sukses --}}
+            @if(session('success'))
+                <div class="p-4 mb-4 text-green-700 bg-green-100 rounded-lg">
+                    {{ session('success') }}
                 </div>
-                <div class="w-full h-full py-2 font-semibold text-center">Aturan presensi</div>
+            @endif
+            @if(session('error'))
+                <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            {{-- Form Presensi --}}
+            <form id="lokasiForm" method="POST" action="{{ route('handle-absen-sekolah') }}">
+                @csrf
+                <input type="hidden" name="lokasi" id="lokasi">
+                <button type="submit" 
+                    @if($statusAbsen) 
+                        disabled 
+                        class="w-full bg-gray-300 text-center font-semibold py-3 rounded-lg cursor-not-allowed"
+                    @else
+                        class="w-full bg-green-400 text-white text-center font-semibold py-3 rounded-lg hover:bg-green-500 transition duration-150 ease-in-out"
+                    @endif
+                >
+                    @if($statusAbsen)
+                        Sudah Presensi Hari Ini
+                    @else
+                        Presensi
+                    @endif
+                </button>
+            </form>
+
+            {{-- Aturan presensi --}}
+            <div class="text-center font-semibold">
+                Aturan Presensi: Pastikan Anda berada dalam radius yang ditentukan dari lokasi sekolah.
             </div>
         </div>
     </div>
@@ -37,7 +56,7 @@
 <script>
     // Membuat peta dengan Leaflet.js
     var map = L.map('map', {
-        center: [0, 0],
+        center: [0, 0], // Initial center
         zoom: 13,
         scrollWheelZoom: false,
         dragging: false,

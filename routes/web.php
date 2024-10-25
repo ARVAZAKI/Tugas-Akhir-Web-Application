@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\admin\MapelController;
 use App\Http\Controllers\IzinController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,9 @@ Route::get('/izin-guru', function(){
 Route::post('/handle-absen-sekolah', [AbsenController::class, "handleAbsenSekolah"])->name('handle-absen-sekolah')->middleware('auth');;
 Route::get('/absen-sekolah', [AbsenController::class, "absen"])->name('absen-sekolah')->middleware('auth');
 Route::get('/izin', [IzinController::class, "izin"])->name('izin')->middleware('auth');
-Route::post('/izin', [IzinController::class, "postIzin"])->name('izinPost');
+Route::post('/izin', [IzinController::class, "postIzin"])->name('izinPost')->middleware('auth');
+Route::get('/laporan', [LaporanController::class, "laporan"])->name('laporan')->middleware('auth');
+Route::post('/laporan', [LaporanController::class, "createLaporan"])->name('create-laporan')->middleware('auth');
 
 Route::prefix('guru')->middleware('auth')->group(function(){
     Route::get('/', [TeacherController::class, "index"])->name('dashboard.guru');
