@@ -18,14 +18,14 @@
             </div>
             <div class="px-4 space-y-3">
                 @if (Auth::user()->role == 'admin')
-                <a href="{{route('dashboard.admin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="{{route('dashboard.admin')}}" wire:navigate class="flex items-center p-2 space-x-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Laporan" class="w-4 h-4"></div>
                     <div>Laporan</div>
                 </a>
 
                 <!-- Dropdown for Buat -->
                 <div x-data="{ open: false }">
-                    <button @click="open = !open" class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors w-full">
+                    <button @click="open = !open" class="flex items-center w-full p-2 space-x-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                         <div><img src="{{asset('assets/Vector.svg')}}" alt="Buat" class="w-4 h-4"></div>
                         <div>Buat</div>
                         <svg :class="{'rotate-180': open}" class="w-4 h-4 ml-auto transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -34,23 +34,23 @@
                     </button>
 
                     <div x-show="open" class="pl-6 space-y-2">
-                        <a href="{{ route('create-account') }}" wire:navigate class="block p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                        <a href="{{ route('create-account') }}" wire:navigate class="block p-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                             Akun Staf/Guru
                         </a>
-                        <a href="{{ route('create-kelas') }}" wire:navigate class="block p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                        <a href="{{ route('create-kelas') }}" wire:navigate class="block p-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                             Kelas
                         </a>
-                        <a href="{{ route('create-mapel') }}" wire:navigate class="block p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                        <a href="{{ route('create-mapel') }}" wire:navigate class="block p-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                             Mapel
                         </a>
                     </div>
                 </div>
 
-                <a href="{{route('izin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="{{route('izin')}}" wire:navigate class="flex items-center p-2 space-x-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
                     <div>Izin</div>
                 </a>
-                <a href="{{route('profile')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="{{route('profile')}}" wire:navigate class="flex items-center p-2 space-x-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                     <div><img src="{{asset('assets/mdi_account-circle-outline.svg')}}" alt="Profile" class="w-5 h-5"></div>
                     <div>Profile</div>
                 </a>
@@ -60,11 +60,11 @@
                 @endif
 
                 @if (Auth::user()->role == 'student')
-                <a href="{{route('dashboard.student')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="{{route('dashboard.student')}}" wire:navigate class="flex items-center p-2 space-x-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
                     <div>Dashboard</div>
                 </a>
-                <a href="{{route('profile')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                <a href="{{route('profile')}}" wire:navigate class="flex items-center p-2 space-x-2 transition-colors rounded-lg hover:bg-blue-500 hover:text-white">
                     <div><img src="{{asset('assets/mdi_account-circle-outline.svg')}}" alt="Profile" class="w-5 h-5"></div>
                     <div>Profile</div>
                 </a>
@@ -77,31 +77,31 @@
 
         <!-- Main Content -->
         <div class="flex-1">
-            <div class="flex items-center justify-between p-5 border-b-2 bg-white shadow-md">
+            <div class="flex items-center justify-between p-5 bg-white border-b-2 shadow-md">
                 <!-- Menu icon for small screens -->
                 <div id="menu-icon" class="block md:hidden">
                     <img src="{{asset('assets/menu.svg')}}" alt="Menu" class="w-6 h-6 cursor-pointer">
                 </div>
-        
+
                 <!-- Empty div to keep space between menu-icon and profile section -->
                 <div class="flex-1"></div>
-        
+
                 <!-- Profile section -->
-                <div class="hidden md:flex items-center gap-3">
-                    <img src="{{asset('assets/profile.png')}}" class="rounded-full w-10 h-10 shadow-md" alt="profile photo">
+                <div class="items-center hidden gap-3 md:flex">
+                    <img src="{{asset('assets/profile.png')}}" class="w-10 h-10 rounded-full shadow-md" alt="profile photo">
                     <div class="text-right">
                         <div class="text-lg font-semibold">{{ Auth::user()->name }}</div>
                         <div class="text-xs text-gray-500">{{ Auth::user()->role }}</div>
                     </div>
                 </div>
             </div>
-        
+
             <!-- Content Section -->
             <div class="p-5">
                 @yield('content')
             </div>
         </div>
-        
+
     </div>
 
     <script>

@@ -20,11 +20,11 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
-        if(Auth::user()->role == 'admin'){
-        $this->redirectIntended(default: route('dashboard.admin', absolute: false), navigate: true);
+        if (Auth::user()->role == 'admin') {
+            $this->redirectIntended(default: route('dashboard.admin', absolute: false), navigate: true);
         }
-        if(Auth::user()->role == 'student'){
-        $this->redirectIntended(default: route('dashboard.admin', absolute: false), navigate: true);
+        if (Auth::user()->role == 'student') {
+            $this->redirectIntended(default: route('dashboard.admin', absolute: false), navigate: true);
         }
     }
 }; ?>
@@ -34,6 +34,7 @@ new #[Layout('layouts.guest')] class extends Component
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form wire:submit="login">
+        @csrf
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />

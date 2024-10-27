@@ -2,15 +2,28 @@
 
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\Guru\AbsenGuruController;
+use App\Http\Controllers\Guru\DashboardGuruController;
+use App\Http\Controllers\Guru\IzinGuruController;
+use App\Http\Controllers\Guru\LaporanGuruController;
+use App\Http\Controllers\Guru\PenilaianGuruController;
+use App\Http\Controllers\Guru\PresensiSekolahGuruController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::view('/', 'welcome')->middleware('guest');
 Route::view('/test', 'layouts.dashboard-layout');
 
-Volt::route('guru', 'pages.guru.dashboard-guru')->name('guru');
-Volt::route('guru/absen', 'pages.guru.absen-guru')->name('guru.absen');
-Volt::route('guru/izin', 'pages.guru.izin-guru')->name('guru.izin');
+
+
+Route::prefix('guru')->middleware(['auth'])->group(function () {
+    Route::get('', [DashboardGuruController::class, 'home'])->name('guru');
+    Route::get('absen', [AbsenGuruController::class, 'absen'])->name('guru.absen');
+    Route::get('izin', [IzinGuruController::class, 'izin'])->name('guru.izin');
+    Route::get('presensi', [PresensiSekolahGuruController::class, 'presensi'])->name('guru.presensi');
+    Route::get('laporan', [LaporanGuruController::class, 'laporan'])->name('guru.laporan');
+    Route::get('penilaian', [PenilaianGuruController::class, 'penilaian'])->name('guru.penilaian');
+});
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
@@ -25,10 +38,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::view('izin', 'livewire.admin.izin')
         ->middleware(['auth', 'verified'])
         ->name('izin');
-
 });
 
-Route::prefix('admin')->middleware(['auth'])->group(function(){
+Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/create-account', [AccountController::class, "index"])->name('create-account');
     Route::post('/create-account', [AccountController::class, "store"])->name('store-account');
     Route::delete('/delete/{id}', [AccountController::class, "delete"])->name('delete-account');

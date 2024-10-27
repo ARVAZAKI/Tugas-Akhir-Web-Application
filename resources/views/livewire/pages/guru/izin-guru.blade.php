@@ -1,28 +1,10 @@
-<?php
-
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
-
-new #[Layout('layouts.dashboard-layout')] class extends Component {
-    public $guru = [
-        [
-            'mata_kuliah' => 'Praktek Pemograman',
-            'kelas' => '12 RPL 1',
-        ],
-        [
-            'mata_kuliah' => 'Praktek Pemograman',
-            'kelas' => '12 RPL 1',
-        ],
-        [
-            'mata_kuliah' => 'Basis Data II',
-            'kelas' => '14 RPL 1',
-        ],
-    ];
-}; ?>
+@extends('layouts.dashboard-layout')
+@section('title', 'Buat Akun')
+@section('content')
 
 <div>
     <div class="container">
-        <div class="flex items-center justify-center h-screen">
+        <div class="flex items-center justify-center">
             <div class="min-w-full px-4 py-3 space-y-16 border-2">
                 <div class="space-y-3">
                     <div class="text-lg font-semibold text-[#0d3676]">Form izin</div>
@@ -44,3 +26,5 @@ new #[Layout('layouts.dashboard-layout')] class extends Component {
 
 
 </div>
+
+@endsection

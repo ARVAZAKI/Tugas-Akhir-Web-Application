@@ -1,24 +1,6 @@
-<?php
-
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
-
-new #[Layout('layouts.dashboard-layout')] class extends Component {
-    public $guru = [
-        [
-            'mata_kuliah' => 'Praktek Pemograman',
-            'kelas' => '12 RPL 1',
-        ],
-        [
-            'mata_kuliah' => 'Praktek Pemograman',
-            'kelas' => '12 RPL 1',
-        ],
-        [
-            'mata_kuliah' => 'Basis Data II',
-            'kelas' => '14 RPL 1',
-        ],
-    ];
-}; ?>
+@extends('layouts.dashboard-layout')
+@section('title', 'Buat Akun')
+@section('content')
 
 <div>
     <div class="container md:grid md:grid-cols-3 md:gap-3">
@@ -36,3 +18,4 @@ new #[Layout('layouts.dashboard-layout')] class extends Component {
     </div>
 
 </div>
+@endsection
