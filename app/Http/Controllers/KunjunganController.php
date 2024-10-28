@@ -2,29 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AbsenSekolah;
+use App\Models\Kunjungan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class AbsenController extends Controller
+class KunjunganController extends Controller
 {
-    public function absen()
+    public function kunjungan()
     {
-        $absenToday = AbsenSekolah::where('user_id', Auth::user()->id)
-            ->whereDate('created_at', today())
-            ->get();
-        
-        $statusAbsen = $absenToday->count() > 0;
-        
-        return view('absen-sekolah', compact('statusAbsen'));
+        return view('kunjungan');
     }
-    public function handleAbsenSekolah(Request $request)
+    public function handleKunjungan(Request $request)
 {
     $validator = Validator::make($request->all(), [
-        'lokasi' => 'required'
+        'lokasi' => 'required',
+        'nama' => 'required',
+        'keperluan' => 'required'
     ], [
-        'lokasi.required' => 'Harap nyalakan lokasi Anda saat ini.'
+        'lokasi.required' => 'Harap nyalakan lokasi Anda saat ini.',
+        'nama.required' => 'Harap masukkan nama Anda.',
+        'keperluan.required' => 'Harap masukkan keperluan Anda.'
     ]);
 
     if ($validator->fails()) {
@@ -44,13 +41,14 @@ class AbsenController extends Controller
         return redirect()->back()->with('error', 'Anda tidak berada dalam radius 500 meter dari lokasi sekolah untuk melakukan absensi.');
     }
 
-    $absenSekolah = AbsenSekolah::create([
-        'user_id' => Auth::user()->id,
-        'status' => 'hadir',
-        'lokasi' => $request->lokasi
+    $kunjungan = Kunjungan::create([
+        'nama' => $request->nama,
+        'keperluan' => $request->keperluan,
+        'lokasi' => $request->lokasi,
+        'waktu' => now()
     ]);
 
-    return redirect()->back()->with('success', 'Berhasil melakukan absensi sekolah.');
+    return redirect()->back()->with('success', 'Berhasil melakukan submit kunjungan.');
 }
 
 private function calculateDistance($lat1, $lon1, $lat2, $lon2) {
@@ -67,8 +65,4 @@ private function calculateDistance($lat1, $lon1, $lat2, $lon2) {
     $distance = $earthRadius * $c; 
     return $distance;
 }
-
-
-
-
 }

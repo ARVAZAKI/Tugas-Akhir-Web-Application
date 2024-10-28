@@ -34,7 +34,7 @@
                             </svg>
                         </a>
                         @endif
-                        <a href="{{route('login')}}" wire:navigate class="w-full bg-[#0B235E] text-white py-4 px-6 rounded-lg flex justify-between items-center hover:bg-blue-800 transition-colors no-underline">
+                        <a href="{{route('kunjungan')}}" wire:navigate class="w-full bg-[#0B235E] text-white py-4 px-6 rounded-lg flex justify-between items-center hover:bg-blue-800 transition-colors no-underline">
                             <div>
                                 <div class="text-xl font-bold">Visitor</div>
                                 <div class="text-sm">Exclusive to visitor only.</div>

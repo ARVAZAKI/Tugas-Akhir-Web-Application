@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\admin\MapelController;
 use App\Http\Controllers\IzinController;
+use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
@@ -28,15 +30,15 @@ Route::get('/izin', [IzinController::class, "izin"])->name('izin')->middleware('
 Route::post('/izin', [IzinController::class, "postIzin"])->name('izinPost')->middleware('auth');
 Route::get('/laporan', [LaporanController::class, "laporan"])->name('laporan')->middleware('auth');
 Route::post('/laporan', [LaporanController::class, "createLaporan"])->name('create-laporan')->middleware('auth');
+Route::get('/kunjungan', [KunjunganController::class, "kunjungan"])->name('kunjungan');
+Route::post('/kunjungan', [KunjunganController::class, "handleKunjungan"])->name('handle-kunjungan');
 
 Route::prefix('guru')->middleware('auth')->group(function(){
     Route::get('/', [TeacherController::class, "index"])->name('dashboard.guru');
 });
 Route::prefix('admin')->middleware(['auth'])->group(function(){
-    Route::view('dashboard-admin', 'livewire.admin.dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard.admin');
 
+    Route::get('/laporan', [AdminLaporanController::class, "laporan"])->name('admin.laporan');
     Route::get('/create-account', [AccountController::class, "index"])->name('create-account');
     Route::post('/create-account', [AccountController::class, "store"])->name('store-account');
     Route::delete('/delete-account/{id}', [AccountController::class, "delete"])->name('delete-account');

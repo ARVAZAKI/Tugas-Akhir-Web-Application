@@ -32,5 +32,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'role' => 'teacher',
         ]);
+        User::create([
+            'name' => 'arva staff',
+            'email' => 'staff@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role' => 'staff',
+        ]);
     }
 }

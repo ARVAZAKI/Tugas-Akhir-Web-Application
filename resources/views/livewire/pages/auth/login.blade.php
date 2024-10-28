@@ -21,13 +21,16 @@ new #[Layout('layouts.guest')] class extends Component
         Session::regenerate();
 
         if(Auth::user()->role == 'admin'){
-        $this->redirectIntended(default: route('dashboard.admin', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('admin.laporan', absolute: false), navigate: true);
         }
         if(Auth::user()->role == 'student'){
         $this->redirectIntended(default: route('dashboard.admin', absolute: false), navigate: true);
         }
         if(Auth::user()->role == 'teacher'){
         $this->redirectIntended(default: route('dashboard.guru', absolute: false), navigate: true);
+        }
+        if(Auth::user()->role == 'staff'){
+        $this->redirectIntended(default: route('absen-sekolah', absolute: false), navigate: true);
         }
     }
 }; ?>

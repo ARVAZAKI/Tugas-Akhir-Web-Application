@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 
 class LaporanController extends Controller
 {
-    public function index(){
+    public function laporan(){
         $laporan = Laporan::with('user')->get();
+        return view('admin.laporan', compact('laporan'));
     }
 }
