@@ -8,6 +8,7 @@ use App\Http\Controllers\Guru\IzinGuruController;
 use App\Http\Controllers\Guru\LaporanGuruController;
 use App\Http\Controllers\Guru\PenilaianGuruController;
 use App\Http\Controllers\Guru\PresensiSekolahGuruController;
+use App\Http\Controllers\Profile\ProfileDashboardController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -23,6 +24,10 @@ Route::prefix('guru')->middleware(['auth'])->group(function () {
     Route::get('presensi', [PresensiSekolahGuruController::class, 'presensi'])->name('guru.presensi');
     Route::get('laporan', [LaporanGuruController::class, 'laporan'])->name('guru.laporan');
     Route::get('penilaian', [PenilaianGuruController::class, 'penilaian'])->name('guru.penilaian');
+});
+
+Route::prefix('halo')->middleware(['auth'])->group(function () {
+    Route::get('', [ProfileDashboardController::class, 'profile'])->name('profile');
 });
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
