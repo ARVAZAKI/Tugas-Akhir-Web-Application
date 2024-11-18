@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\User;
 use App\Models\Kelas;
+use App\Models\GuruMapel;
 use App\Models\KelasMapel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\MataPelajaran;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\GuruMapel;
-use App\Models\User;
 
 class MapelController extends Controller
 {
     public function index(){
-        $mapel = MataPelajaran::all();
-        $kelas = Kelas::all();
+        $mapel = MataPelajaran::with('guru','kelas')->get();
         $guru = User::where('role','teacher')->get();
-        return view('admin.create-mapel', compact('mapel', 'kelas','guru'));
+        return view('admin.create-mapel', compact('mapel','guru'));
     }
     
     public function store(Request $request){
@@ -28,9 +28,26 @@ class MapelController extends Controller
             'nama_mapel.required' => 'Nama mapel wajib diisi.',
         ]);
 
-        MataPelajaran::create([
+        $mapel = MataPelajaran::create([
             'nama_mapel' => $request->nama_mapel
         ]);
+
+        $kelasArray = Kelas::all();
+        $guruArray = User::where('role','teacher')->get();
+
+        // Buat relasi antara kelas dan mata pelajaran
+        foreach ($kelasArray as $kelas) {
+                KelasMapel::create([
+                    'kelas_id' => $kelas->id,
+                    'mapel_id' => $mapel->id
+                ]);
+        }
+        foreach ($guruArray as $g) {
+                GuruMapel::create([
+                    'user_id' => $g->id,
+                    'mapel_id' => $mapel->id
+                ]);
+        }
         return redirect()->back()->with('message', "berhasil menambah mata pelajaran");
     }
 
@@ -46,14 +63,23 @@ class MapelController extends Controller
     }
 
     public function createKM(Request $request){
-        $km = KelasMapel::create([
-            'kelas_id' => $request->kelas_id,
-            'mapel_id' => $request->mapel_id,
+        $validated = $request->validate([
+            'kelas_id' => 'required|exists:kelas,id',
+            'mapel_id' => 'required|exists:mata_pelajaran,id',
+            'user_id' => 'required|exists:users,id'
         ]);
-        GuruMapel::create([
-            'mapel_id' => $request->mapel_id,
-            'user_id' => $request->user_id
-        ]);
-        return redirect()->back()->with('message', 'berhasil menghubungkan kelas mapel');
+    
+        try {
+            DB::transaction(function() use ($validated) {
+                GuruMapel::create([
+                    'mapel_id' => $validated['mapel_id'],
+                    'user_id' => $validated['user_id']
+                ]);
+            });
+            
+            return redirect()->back()->with('message', 'Berhasil menghubungkan kelas mapel');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data');
+        }
     }
 }

@@ -18,4 +18,9 @@ class AbsenSekolah extends Model
         'tanggal-izin',
         'tanggal-absen',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

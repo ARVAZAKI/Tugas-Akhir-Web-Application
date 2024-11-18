@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\GuruMapel;
 use Illuminate\Http\Request;
+use App\Models\MataPelajaran;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,12 +36,24 @@ class AccountController extends Controller
         'confirm_password.same' => 'konfirmasi password tidak sama dengan password'
     ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role
         ]);
+        if ($request->role === 'teacher') {
+            // Ambil semua mata pelajaran
+            $mapelIds = MataPelajaran::pluck('id')->toArray();
+    
+            // Buat relasi antara guru dan mata pelajaran
+            foreach ($mapelIds as $mapelId) {
+                GuruMapel::create([
+                    'user_id' => $user->id,
+                    'mapel_id' => $mapelId
+                ]);
+            }
+        }
 
         return redirect()->back()->with('message', "berhasil menambah akun");
     }

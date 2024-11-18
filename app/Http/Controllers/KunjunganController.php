@@ -37,8 +37,8 @@ class KunjunganController extends Controller
 
     $jarak = $this->calculateDistance($latUser, $lngUser, $lokasiSekolah['latitude'], $lokasiSekolah['longitude']);
 
-    if ($jarak > 0.5) {  
-        return redirect()->back()->with('error', 'Anda tidak berada dalam radius 500 meter dari lokasi sekolah untuk melakukan absensi.');
+    if ($jarak > 1) {  
+        return redirect()->back()->with('error', 'Anda tidak berada dalam radius 1 km dari lokasi sekolah untuk melakukan absensi.');
     }
 
     $kunjungan = Kunjungan::create([
