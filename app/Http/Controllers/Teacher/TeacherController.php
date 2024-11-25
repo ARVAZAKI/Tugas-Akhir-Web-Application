@@ -33,19 +33,31 @@ class TeacherController extends Controller
         $mapel = MataPelajaran::with('kelas')->where('id',$mapelId)->first();
         return view('guru.list-kelas-mapel', compact('mapel'));
     }
-    public function absenMapel($mapelId, $kelasId){
-        $mapel = MataPelajaran::with('kelas')->where('id',$mapelId)->first();
-        $kelas = Kelas::with('mapel')->where('id', $kelasId)->first();
-        $statusAbsen = KelasMapel::where('mapel_id', $mapelId)
+    public function absenMapel($mapelId, $kelasId)
+{
+    $mapel = MataPelajaran::with('kelas')->where('id', $mapelId)->first();
+    $kelas = Kelas::with('mapel', 'users')->where('id', $kelasId)->first();
+    $statusAbsen = KelasMapel::where('mapel_id', $mapelId)
         ->where('kelas_id', $kelasId)
         ->first();
-        $jumlahAbsen = AbsenMapel::where('mapel_id', $mapelId)
+    $jumlahAbsen = AbsenMapel::where('mapel_id', $mapelId)
         ->where('kelas_id', $kelasId)
         ->where('status', 'hadir')
         ->whereDate('created_at', Carbon::today())
         ->count();
-        return view('guru.absen-mapel', compact('mapel','kelas','statusAbsen','jumlahAbsen'));
-    }
+    
+    // Fetch students who are present today
+    $muridHadir = AbsenMapel::with('user')
+        ->where('mapel_id', $mapelId)
+        ->where('kelas_id', $kelasId)
+        ->whereDate('created_at', Carbon::today())
+        ->where('status', 'hadir')
+        ->get();
+
+    return view('guru.absen-mapel', compact('mapel', 'kelas', 'statusAbsen', 'jumlahAbsen', 'muridHadir'));
+}
+
+    
     public function openAbsen($mapelId, $kelasId)
     {
         $statusAbsen = KelasMapel::where('mapel_id', $mapelId)

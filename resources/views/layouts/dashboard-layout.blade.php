@@ -51,10 +51,10 @@
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
                     <div>Izin</div>
                 </a>
-                <a href="" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                {{-- <a href="" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
                     <div>Absensi</div>
-                </a>
+                </a> --}}
                 <a href="{{route('profile')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/mdi_account-circle-outline.svg')}}" alt="Profile" class="w-5 h-5"></div>
                     <div>Profile</div>
@@ -68,6 +68,10 @@
                 <a href="{{route('absen-sekolah')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
                     <div>Absen Sekolah</div>
+                </a>
+                <a href="{{route('list.mapel')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
+                    <div>Absen Mapel</div>
                 </a>
                 <a href="{{route('izin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
@@ -88,12 +92,16 @@
                 @if (Auth::user()->role == 'teacher')
                 <a href="{{route('dashboard.guru')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
-                    <div>Dashboard</div>
+                    <div>Absen Mapel</div>
                 </a>
                 <a href="{{route('absen-sekolah')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
                     <div>Absen Sekolah</div>
                 </a>
+                {{-- <a href="" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
+                    <div>Penilaian</div>
+                </a> --}}
                 <a href="{{route('izin')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Dashboard" class="w-4 h-4"></div>
                     <div>Izin</div>

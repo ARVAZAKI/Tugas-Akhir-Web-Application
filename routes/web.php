@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\MapelController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,12 @@ Route::prefix('guru')->middleware('auth')->group(function(){
     Route::post('/open-absen-mapel/{mapelId}/{kelasId}', [TeacherController::class, "openAbsen"])->name('absen.open');
     Route::post('/closed-absen-mapel/{mapelId}/{kelasId}', [TeacherController::class, "closeAbsen"])->name('absen.close');
 });
+Route::prefix('student')->middleware('auth')->group(function(){
+    Route::get('/list-mapel', [StudentController::class, "listMapel"])->name('list.mapel');
+    Route::get('/list-mapel/{mapelId}', [StudentController::class, "absenMapel"])->name('absen.mapel.student');
+    Route::post('/submit-absen/{mapelId}', [StudentController::class, "submitAbsen"])->name('submit.absen');
+});
+
 Route::prefix('admin')->middleware(['auth'])->group(function(){
 
     Route::get('/laporan', [AdminLaporanController::class, "laporan"])->name('admin.laporan');

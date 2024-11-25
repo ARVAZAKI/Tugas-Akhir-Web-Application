@@ -13,6 +13,22 @@
 <body>
       
 <div class="container mx-auto my-4 p-4">
+    <div class="mb-5">
+        <a href="/"
+           class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-[#0d3676] rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 class="h-5 w-5 mr-2" 
+                 fill="none" 
+                 viewBox="0 0 24 24" 
+                 stroke="currentColor">
+                <path stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      stroke-width="2" 
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Kembali
+        </a>
+      </div>
       <div class="flex flex-col md:flex-row bg-white p-6 rounded-lg shadow-md space-y-4 md:space-y-0 md:space-x-4">
           
           {{-- Map Section --}}

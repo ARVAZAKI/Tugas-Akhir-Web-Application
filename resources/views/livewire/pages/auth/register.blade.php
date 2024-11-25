@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
+use App\Models\Kelas; // This import is missing
 new #[Layout('layouts.guest')] class extends Component
 {
     public string $name = '';
@@ -15,27 +15,41 @@ new #[Layout('layouts.guest')] class extends Component
     public string $password = '';
     public string $role = '';
     public string $password_confirmation = '';
+    public string $kode_kelas = '';  // New property for kode_kelas
+
 
     /**
      * Handle an incoming registration request.
      */
-    public function register(): void
-    {
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required'],
-        ]);
+     public function register(): void
+{
+    $validated = $this->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+        'kode_kelas' => ['required', 'exists:kelas,kode_kelas'],
+    ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+    $kelas = Kelas::where('kode_kelas', $this->kode_kelas)->first();
 
-        event(new Registered($user = User::create($validated)));
-
-        Auth::login($user);
-
-        $this->redirect(route('dashboard.admin', absolute: false), navigate: true);
+    if (!$kelas) {
+        $this->addError('kode_kelas', 'Invalid class code');
+        return;
     }
+
+    $user = User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+        'role' => 'student',
+        'kelas_id' => $kelas->id
+    ]);
+
+    event(new Registered($user));
+    Auth::login($user);
+
+    $this->redirectIntended(default: route('absen-sekolah', absolute: false), navigate: true);
+}
 }; ?>
 
 <div>
@@ -57,24 +71,22 @@ new #[Layout('layouts.guest')] class extends Component
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
+            <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
+            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <!-- Kode Kelas -->
+        <div class="mt-4">
+            <x-input-label for="kode_kelas" :value="__('Kode Kelas')" />
+            <x-text-input wire:model="kode_kelas" id="kode_kelas" class="block mt-1 w-full" type="text" name="kode_kelas" required />
+            <x-input-error :messages="$errors->get('kode_kelas')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -88,3 +100,4 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
     </form>
 </div>
+

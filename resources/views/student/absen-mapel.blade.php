@@ -3,11 +3,10 @@
 @section('content')
 <style>
     button:disabled {
-    cursor: not-allowed;
-    background-color: #d1d5db; /* Warna abu-abu */
-    color: #9ca3af; /* Warna teks lebih terang */
-}
-
+        cursor: not-allowed;
+        background-color: #d1d5db; /* Warna abu-abu */
+        color: #9ca3af; /* Warna teks lebih terang */
+    }
 </style>
 @if (session()->has('message'))
 <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded-md shadow-md transition-all duration-500 ease-in-out transform hover:scale-105">
@@ -24,7 +23,7 @@
 </div>
 @endif
 <div class="mb-5">
-  <a href="/guru/absen-mapel/{{$mapel->id}}" 
+  <a href="/student/list-mapel"
      class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-[#0d3676] rounded-lg">
       <svg xmlns="http://www.w3.org/2000/svg" 
            class="h-5 w-5 mr-2" 
@@ -42,7 +41,7 @@
 <div class="flex flex-col p-4 mt-10 space-y-2 bg-white shadow-lg rounded-lg max-w-2xl mx-auto border border-gray-200">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center text-blue-700 font-semibold">
-        <span>{{ $mapel->nama_mapel }} - {{ $kelas->nama_kelas }}</span>
+        <span>{{ $mapel->nama_mapel }} - {{$kelas->nama_kelas}}</span>
         <span id="currentDate" class="text-gray-500 mt-2 md:mt-0"></span>
     </div>
     
@@ -51,61 +50,69 @@
         <!-- Left side with teacher name and student count -->
         <div class="flex flex-col p-4 space-y-2">
             <div>
-                <span class="font-medium">Jumlah siswa hadir hari ini: {{$jumlahAbsen}}</span> 
+                Status Absensi : @if ($statusAbsen->status_absen === 'open')
+                    <p class="text-green-500">Absensi telah dibuka</p>
+                    @else
+                    <p class="text-red-500">Absensi belum dibuka</p>
+                @endif
             </div>
         </div>
         
         <!-- Right side with buttons -->
         <div class="flex flex-col p-4 space-y-2 items-center justify-center border-t md:border-t-0 md:border-l border-gray-200">
-            <form action="{{ route('absen.open', ['mapelId' => $mapel->id, 'kelasId' => $kelas->id]) }}" method="POST">
+            <p class="text-gray-500 text-sm mt-2">
+                @if ($statusKehadiran)
+                    Anda sudah absen hari ini.
+                @elseif ($statusAbsen->status_absen !== 'open')
+                    Absensi belum dibuka.
+                @endif
+            </p>
+            
+            <form action="{{route('submit.absen', $mapel->id)}}" method="POST">
                 @csrf
-                <button type="submit" 
-                        class="px-4 py-2 w-full md:w-auto bg-lime-200 text-black font-medium rounded-md"
-                        {{ $statusAbsen->status_absen === 'open' ? 'disabled' : '' }}>
-                    Buka Presensi
+                <button 
+            type="submit" 
+            class="px-4 py-2 w-full md:w-auto bg-green-400 text-white font-medium rounded-md" 
+            @if ($statusAbsen->status_absen !== 'open' || $statusKehadiran) 
+                disabled 
+            @endif>
+            Absen
+        </button>
+
+            
+            
+            </form>
+            <form action="/izin" method="GET">
+                <button type="submit" class="px-4 py-2 w-full md:w-auto bg-yellow-400 text-white font-medium rounded-md" 
+                    @if ($statusAbsen->status_absen !== 'open' || $statusKehadiran) disabled @endif>
+                    Ajukan Izin
                 </button>
             </form>
-                   
-
-            <form action="{{ route('absen.close', ['mapelId' => $mapel->id, 'kelasId' => $kelas->id]) }}" method="POST">
-                @csrf
-                <button type="submit" class="px-4 py-2 w-full md:w-auto bg-red-400 text-white font-medium rounded-md"  {{ $statusAbsen->status_absen === 'closed' ? 'disabled' : '' }}>
-                    Tutup Presensi
-                </button>
-            </form>
-
         </div>
     </div>
     <div class="bg-white shadow-lg rounded-lg overflow-hidden mt-8">
         <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-xl font-semibold text-gray-800">Daftar Siswa Hadir</h2>
+            <h2 class="text-xl font-semibold text-gray-800">Riwayat Absen</h2>
         </div>
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white">
                 <thead>
                     <tr class="bg-green-100 text-left text-gray-600 uppercase text-sm leading-normal">
                         <th class="py-3 px-6">No</th>
-                        <th class="py-3 px-6">Nama Siswa</th>
+                        <th class="py-3 px-6">Waktu Absen</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 text-sm font-light">
-                    @forelse ($muridHadir as $murid) <!-- Fix: $muridHadir is a collection of AbsenMapel models -->
-                    <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-6">{{ $loop->iteration }}</td>
-                        <td class="py-3 px-6">{{ $murid->user->name }}</td> <!-- Accessing user relationship -->
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="2" class="text-center py-3">Belum ada siswa hadir</td>
-                    </tr>
-                    @endforelse
+                   @foreach ($riwayatAbsen as $historyAbsen)
+                   <tr>
+                    <td class="py-3 px-6">{{ $loop->iteration }}</td>
+                    <td class="py-3 px-6">{{ $historyAbsen->created_at->format('d M Y, H:i') }}</td>
+                </tr>
+                   @endforeach
                 </tbody>
-                
             </table>
         </div>
     </div>
-    
-    
 </div>
 
 <script>

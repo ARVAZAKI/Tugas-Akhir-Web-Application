@@ -18,9 +18,15 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('student');
+            $table->foreignId('kelas_id')
+                  ->nullable() 
+                  ->constrained('kelas') 
+                  ->cascadeOnDelete()
+                  ->cascadeOnUpdate();
             $table->rememberToken();
             $table->timestamps();
         });
+        
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
