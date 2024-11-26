@@ -74,6 +74,11 @@
                 </button>
             </form>
 
+            <a href="{{ route('rekap-absen-siswa', ['mapelId' => $mapel->id, 'kelasId' => $kelas->id]) }}" 
+                class="px-4 py-2 w-full md:w-auto bg-green-400 text-white font-medium rounded-md">
+                Rekap Absen
+             </a>
+             
         </div>
     </div>
     <div class="bg-white shadow-lg rounded-lg overflow-hidden mt-8">

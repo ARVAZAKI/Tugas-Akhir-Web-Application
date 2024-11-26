@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Laporan::class, 'user_id', 'id');
     }
+ 
+    public function kelas()
+    {
+        return $this->belongsTo(User::class, 'kelas_id', 'id');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\AbsenSekolah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,5 +67,26 @@ private function calculateDistance($lat1, $lon1, $lat2, $lon2) {
 
     $distance = $earthRadius * $c; 
     return $distance;
+}
+
+public function rekapAbsen()
+{
+    $user = User::with('kelas')->get();
+
+    // Mendapatkan filter tanggal dari request
+    $fromDate = request('from_date');
+    $toDate = request('to_date');
+
+    // Query absensi dengan filter tanggal
+    $absen = AbsenSekolah::with('user')
+        ->when($fromDate, function ($query, $fromDate) {
+            return $query->whereDate('created_at', '>=', $fromDate);
+        })
+        ->when($toDate, function ($query, $toDate) {
+            return $query->whereDate('created_at', '<=', $toDate);
+        })
+        ->get();
+
+    return view('admin.daftar-hadir', compact('absen','user'));
 }
 }

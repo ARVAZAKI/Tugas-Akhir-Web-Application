@@ -31,6 +31,7 @@ Route::prefix('guru')->middleware('auth')->group(function(){
     Route::get('/absen-mapel/{mapelId}/{kelasId}', [TeacherController::class, "absenMapel"])->name('absen.mapel');
     Route::post('/open-absen-mapel/{mapelId}/{kelasId}', [TeacherController::class, "openAbsen"])->name('absen.open');
     Route::post('/closed-absen-mapel/{mapelId}/{kelasId}', [TeacherController::class, "closeAbsen"])->name('absen.close');
+    Route::get('/rekap-absensi/{mapelId}/{kelasId}', [TeacherController::class, "rekapAbsen"])->name('rekap-absen-siswa');
 });
 Route::prefix('student')->middleware('auth')->group(function(){
     Route::get('/list-mapel', [StudentController::class, "listMapel"])->name('list.mapel');
@@ -40,6 +41,7 @@ Route::prefix('student')->middleware('auth')->group(function(){
 
 Route::prefix('admin')->middleware(['auth'])->group(function(){
 
+    Route::get('/kunjungan', [KunjunganController::class, "rekapKunjungan"])->name('admin.kunjungan');
     Route::get('/laporan', [AdminLaporanController::class, "laporan"])->name('admin.laporan');
     Route::get('/create-account', [AccountController::class, "index"])->name('create-account');
     Route::post('/create-account', [AccountController::class, "store"])->name('store-account');
@@ -57,6 +59,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::post('/create-mapel-kelas', [MapelController::class, "createKM"])->name('create-KM');
 
     Route::get('/izin', [AdminIzinController::class, "izin"])->name('izin.admin')->middleware('auth');
+    Route::get('/rekap-absen-sekolah', [AbsenController::class, "rekapAbsen"])->name('rekap-absen-sekolah')->middleware('auth');
 
 });
 

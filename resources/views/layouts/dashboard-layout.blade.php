@@ -51,6 +51,14 @@
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
                     <div>Izin</div>
                 </a>
+                <a href="{{route('rekap-absen-sekolah')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
+                    <div>Rekap Absen Sekolah</div>
+                </a>
+                <a href="{{route('admin.kunjungan')}}" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
+                    <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
+                    <div>Rekap Kunjungan</div>
+                </a>
                 {{-- <a href="" wire:navigate class="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-500 hover:text-white transition-colors">
                     <div><img src="{{asset('assets/Vector.svg')}}" alt="Izin" class="w-4 h-4"></div>
                     <div>Absensi</div>

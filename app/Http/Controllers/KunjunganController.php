@@ -65,4 +65,8 @@ private function calculateDistance($lat1, $lon1, $lat2, $lon2) {
     $distance = $earthRadius * $c; 
     return $distance;
 }
+public function rekapKunjungan(){
+    $kunjungan = Kunjungan::all();
+    return view('admin.kunjungan', compact('kunjungan'));
+}
 }

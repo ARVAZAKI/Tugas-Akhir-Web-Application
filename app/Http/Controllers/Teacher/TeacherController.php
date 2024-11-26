@@ -85,5 +85,29 @@ class TeacherController extends Controller
         return redirect()->back()->with('message', 'Absensi telah ditutup.');
     }
     
+    public function rekapAbsen($mapelId, $kelasId)
+    {
+        $mapel = MataPelajaran::with('kelas')->findOrFail($mapelId);
+        $kelas = Kelas::findOrFail($kelasId);
+    
+        // Mendapatkan filter tanggal dari request
+        $fromDate = request('from_date');
+        $toDate = request('to_date');
+    
+        // Query absensi dengan filter tanggal
+        $absen = AbsenMapel::with('user')
+            ->where('kelas_id', $kelasId)
+            ->where('mapel_id', $mapelId)
+            ->when($fromDate, function ($query, $fromDate) {
+                return $query->whereDate('created_at', '>=', $fromDate);
+            })
+            ->when($toDate, function ($query, $toDate) {
+                return $query->whereDate('created_at', '<=', $toDate);
+            })
+            ->get();
+    
+        return view('guru.rekap-absen', compact('mapel', 'kelas', 'absen'));
+    }
+    
     
 }
